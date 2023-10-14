@@ -29,16 +29,19 @@ export const PostsList: FC<PostsListProps> = () => {
     }
   }, [isSuccess]);
   useEffect(() => {
-    if (inViewFirst && startValue) {
-      setHeightFirst(heightFirst - 150);
-      setStartValue(startValue - 1);
-      setHeightLast(heightLast + 150);
-    }
-    if (inViewLast && data?.meta && startValue + 11 <= data.meta) {
-      setHeightFirst(heightFirst + 150);
-      setStartValue(startValue + 1);
-      setHeightLast(pr => startValue + 11 === (data.meta - 1) ? 0 : pr - 150);
-    }
+    const timer = setTimeout(() => {
+      if (inViewFirst && startValue) {
+        setHeightFirst(heightFirst - 150);
+        setStartValue(startValue - 1);
+        setHeightLast(heightLast + 150);
+      }
+      if (inViewLast && data?.meta && startValue + 11 <= data.meta) {
+        setHeightFirst(heightFirst + 150);
+        setStartValue(startValue + 1);
+        setHeightLast(pr => startValue + 11 === (data.meta - 1) ? 0 : pr - 150);
+      }
+    }, 80);
+    return () => clearTimeout(timer);
   }, [inViewFirst, inViewLast, startValue]);
   if (isError) {
     return <ErrorComponent />;

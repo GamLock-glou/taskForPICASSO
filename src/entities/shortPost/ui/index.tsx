@@ -1,4 +1,4 @@
-import {FC, useCallback} from "react";
+import React, {FC, useCallback} from "react";
 import {useNavigate} from "react-router-dom";
 import {useInView} from "react-intersection-observer";
 
@@ -13,7 +13,7 @@ interface ShortPostProps {
   post: IPost;
 }
 
-export const ShortPost: FC<ShortPostProps> = ({
+export const ShortPost: FC<ShortPostProps> = React.memo(({
   post,
 }) => {
   const navigate = useNavigate();
@@ -26,5 +26,5 @@ export const ShortPost: FC<ShortPostProps> = ({
       Просмотр
     </Button>
   </div>;
-};
+});
 
