@@ -1,0 +1,1 @@
+export {ShortPost} from "./ui";

@@ -1,0 +1,41 @@
+.container {
+  width: 80%;
+  height: 150px;
+  border: 1px solid teal;
+  margin: 5px 0px;
+  padding: 5px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 5px;
+
+  h3 {
+    margin-block: 0;
+  }
+
+  .description {
+    white-space: nowrap; /* Текст не переносится */
+    overflow: hidden; /* Обрезаем всё за пределами блока */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+  }
+
+  .btn {
+    margin-top: 5px;
+    border: 1px solid teal;
+    box-sizing: border-box;
+    width: fit-content;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: teal;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &:hover {
+      background-color: teal;
+      color: white;
+    }
+  }
+}
