@@ -16,6 +16,7 @@ export const PostsList: FC<PostsListProps> = () => {
   const {inView: inViewFirst, ref: refFirst} = useInView();
   const {inView: inViewLast, ref: refLast} = useInView();
   const [startValue, setStartValue] = useState(0);
+  const [isEnd, setIsEnd] = useState(false);
   const {isLoading, isError, isSuccess, data} = useFetchAllPostsQuery({
     limit: 10,
     start: startValue,
@@ -29,19 +30,30 @@ export const PostsList: FC<PostsListProps> = () => {
     }
   }, [isSuccess]);
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (inViewFirst && startValue) {
-        setHeightFirst(heightFirst - 150);
-        setStartValue(startValue - 1);
-        setHeightLast(heightLast + 150);
-      }
+    if (inViewFirst && startValue) {
+      setHeightFirst(heightFirst - 150);
+      setStartValue(startValue - 1);
+      setHeightLast(heightLast + 150);
+    }
+    function viewBottom() {
       if (inViewLast && data?.meta && startValue + 11 <= data.meta) {
         setHeightFirst(heightFirst + 150);
         setStartValue(startValue + 1);
         setHeightLast(pr => startValue + 11 === (data.meta - 1) ? 0 : pr - 150);
       }
-    }, 80);
-    return () => clearTimeout(timer);
+    }
+    if(!isEnd) {
+      const timer = setTimeout(() => {
+        viewBottom();
+        if(startValue + 11 === data?.meta) {
+          setIsEnd(true);
+        }
+      }, 250);
+      return () => clearTimeout(timer);
+    }
+    if(isEnd) {
+      viewBottom();
+    }
   }, [inViewFirst, inViewLast, startValue]);
   if (isError) {
     return <ErrorComponent />;
